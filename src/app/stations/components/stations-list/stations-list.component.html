@@ -1,0 +1,22 @@
+<div class="content">
+
+    <h1 class="title">Stations List</h1>
+    
+    <img src="assets/vls.jpg" alt="bikes" class="img-bikes">
+
+    <table class="stations-table">
+        <tr>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Bikes available</th>
+            <th>In service</th>
+        </tr>
+        <tr *ngFor="let appStation of appStations">
+            <th>{{ appStation.name }}</th>
+            <th>{{ appStation.capacity }}</th>
+            <th>{{ appStation.num_bikes_available }}</th>
+            <th>{{ appStation.is_installed }}</th>
+        </tr>
+
+    </table>
+</div>

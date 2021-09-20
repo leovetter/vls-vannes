@@ -1,0 +1,17 @@
+@import 'src/variables.scss';
+
+.content {
+    font-size: 2rem;
+    color: $color-black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 3rem;
+    padding-top: 3rem;
+
+    .img-bikes {
+        width: 30rem;
+        height: auto;
+    }
+}

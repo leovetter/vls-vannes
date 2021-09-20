@@ -1,0 +1,19 @@
+@import 'src/variables.scss';
+
+.header {
+    background-color: $color-pink;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    color: $color-white;
+    font-size: 2rem;
+
+    .title {
+        margin-left: 2rem;
+    }
+
+    .city {
+        margin-left: auto;
+        margin-right: 2rem;
+    }
+}
