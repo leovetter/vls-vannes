@@ -13,8 +13,8 @@ import { StationsService } from '../services/stations.service';
 })
 export class StationsStore {
 
-    private appStationSubject = new BehaviorSubject<AppStation[] | null>(null);
-    appStation$: Observable<AppStation[] | null> = this.appStationSubject.asObservable();
+    private appStationSubject = new BehaviorSubject<AppStation[]>([]);
+    appStation$: Observable<AppStation[]> = this.appStationSubject.asObservable();
 
     constructor(private stationsService: StationsService) {
 
@@ -24,6 +24,8 @@ export class StationsStore {
     updateStations() {
 
         // Retreive informations of the stations from the api
+        // ForkJoin will emit the last emitted values from the two observables when they both complete
+        // Both requests will be run in parallel
         forkJoin([
             this.stationsService.getStationInformation(),
             this.stationsService.getStationStatus(),
@@ -59,6 +61,17 @@ export class StationsStore {
                 
             })
             
+            // Associate random number to mitigate the limitations of the api
+            appStations[2].num_docks_available = 0;
+            appStations[3].num_bikes_available = 5;
+            appStations[7].num_docks_available = 0;
+            appStations[8].num_bikes_available = 1;
+            appStations[9].num_docks_available = 0;
+            appStations[10].num_bikes_available = 10;
+            appStations[1].is_installed = 0;
+            appStations[4].is_installed = 0;
+            appStations[6].is_installed = 0;
+
             this.appStationSubject.next(appStations);
         });
     }

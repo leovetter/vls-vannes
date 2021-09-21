@@ -1,8 +1,36 @@
 <div class="content">
 
     <h1 class="title">Stations List</h1>
+    <h2 class="subtitle">Click on station name to access details</h2>
     
     <img src="assets/vls.jpg" alt="bikes" class="img-bikes">
+
+    <div class="input-block" appHighlightInput>
+        <label for="search-name" class="search-name-label hide-label">Search by name</label>
+        <input id="search-name" type="text" class="search-name" placeholder="Search by name">
+    </div>
+
+    <div class="filter-block">
+
+        <div class="input-label">
+
+            <div class="toggle-box" appToggle>
+                <div id="bikes-toggle" class="toggle"></div>
+            </div>
+            <span class="label">At least 1 bike</span>
+
+        </div>
+
+        <div class="input-label">
+
+            <div class="toggle-box" appToggle>
+                <div id="docks-toggle" class="toggle"></div>
+            </div>
+            <span class="label">At least 1 dock</span>
+            
+        </div>
+    </div>
+    
 
     <table class="stations-table">
         <tr>
@@ -12,10 +40,10 @@
             <th>In service</th>
         </tr>
         <tr *ngFor="let appStation of appStations">
-            <th>{{ appStation.name }}</th>
-            <th>{{ appStation.capacity }}</th>
-            <th>{{ appStation.num_bikes_available }}</th>
-            <th>{{ appStation.is_installed }}</th>
+            <td (click)=goDetails(appStation.id)>{{ appStation.name }}</td>
+            <td>{{ appStation.capacity }}</td>
+            <td>{{ appStation.num_bikes_available }}</td>
+            <td> <div class="circle" [ngClass]="{'green': appStation.is_installed === 1, 'red' : appStation.is_installed === 0 }"></div></td>
         </tr>
 
     </table>
