@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { concat } from 'rxjs';
 import { AppStation } from '../model/app-station.model';
 
 @Injectable({
@@ -18,4 +19,21 @@ export class UtilsService {
     }
     return 0;
    };
+
+   setUpFavorites(appStations: AppStation[]): AppStation[] {
+
+      const indexOfFavorite = [];
+      const favorites = [];
+      for(let i = 0; i < appStations.length; i++) {
+
+        if (appStations[i].isFavorite) {
+          indexOfFavorite.push(i);
+          favorites.push(appStations[i])
+        }
+      }
+
+      indexOfFavorite.reverse().forEach(index => appStations.splice(index, 1));
+
+      return favorites.concat(appStations);
+   }
 }

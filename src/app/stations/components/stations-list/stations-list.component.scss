@@ -132,6 +132,10 @@
             text-align: center;
             height: 4rem;
 
+            &.is-favorite {
+                color: $color-blue;
+            }
+
             .circle {
                 height: 2rem;
                 width: 2rem;

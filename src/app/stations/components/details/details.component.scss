@@ -1,0 +1,103 @@
+@import 'src/variables.scss';
+
+.content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 3rem;
+    margin-top: 3rem;
+
+    .back {
+        position: absolute;
+        top: 5px;
+        left: 5rem;
+        cursor: pointer;
+        color: $color-grey-1;
+    }
+
+    .title {
+        font-size: 3rem;
+        color: $color-blue;
+    }
+
+    .star-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .star-icon {
+            cursor: pointer;
+            color: $color-grey-3;
+
+            &.is-favorite {
+                color: $color-pink;
+            }
+        }
+
+        .text {
+            font-size: 1.5rem;
+            color: $color-grey-1;
+            margin-left: 1rem;
+        }
+    }
+    
+
+    .grid-infos {
+        width: 90%;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        grid-column-gap: 2rem;
+        grid-row-gap: 2rem;
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid $color-grey-1;
+            width: 25rem;
+            height: 10rem;
+            padding: 1rem 1rem;
+
+            .value {
+                color: $color-blue;
+                font-weight: bold;
+                font-size: 2.5rem;
+
+                .circle {
+                    height: 2rem;
+                    width: 2rem;
+                    border-radius: 50%;
+                    
+                    &.green {
+                        background-color: $color-green;
+                    }
+    
+                    &.red {
+                        background-color: $color-red;
+                    }
+                }
+
+                &.date {
+                    font-size: 1.7rem;
+                }
+            }
+
+            .text {
+                font-size: 2rem;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.no-content {
+    width: 100%;
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 2rem;
+    color: $color-red;
+}

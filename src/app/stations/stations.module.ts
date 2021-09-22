@@ -6,7 +6,7 @@ import { StationsListComponent } from './components/stations-list/stations-list.
 import { HighlightInputDirective } from './directives/highlight-input.directive';
 import { ToggleDirective } from './directives/toggle-directive.directive';
 import { DetailsComponent } from './components/details/details.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { DetailsComponent } from './components/details/details.component';
   imports: [
     CommonModule,
     StationsRoutingModule,
+    FontAwesomeModule
   ]
 })
 export class StationsModule { }

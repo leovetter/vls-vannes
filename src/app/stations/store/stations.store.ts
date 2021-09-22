@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IncompleteApiError } from '../errors/incomplete-api-error.error';
 import { AppStation } from '../model/app-station.model';
 import { StationInformation } from '../model/station-information.interface';
@@ -74,5 +75,26 @@ export class StationsStore {
 
             this.appStationSubject.next(appStations);
         });
+    }
+
+    getAppStation(id: string): Observable<AppStation | undefined> {
+
+        return this.appStation$.pipe(
+            map(appStations => appStations.find(appStation => appStation.id === id))
+        )
+    }
+
+    markAsFavorite(id: string) {
+
+        const appStations = this.appStationSubject.getValue();
+
+        appStations.forEach(appStation => {
+
+            if (appStation.id === id && !appStation.isFavorite) appStation.setFavorite(true);
+            else if (appStation.id === id && appStation.isFavorite) appStation.setFavorite(false);
+        });
+
+        this.appStationSubject.next([...appStations]);
+
     }
 }

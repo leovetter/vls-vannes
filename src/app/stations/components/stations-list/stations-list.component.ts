@@ -32,30 +32,32 @@ export class StationsListComponent implements OnInit, OnDestroy {
         map((event: any) => event.target.value),
         startWith('')),
       fromEvent(bikesToggle, 'click').pipe(
-        map(val => (val.target as any).className.indexOf('right') === -1),
+        map((val: any) => val.target.className.indexOf('right') === -1),
         startWith(false)),
       fromEvent(docksToggle, 'click').pipe(
-          map(val => (val.target as any).className.indexOf('right') === -1),
+          map((val: any) => val.target.className.indexOf('right') === -1),
           startWith(false)
       )
     ]).subscribe((res: any) => {
 
-      const appStations: AppStation[] = res[0];
+      const appStations: AppStation[] = [...res[0]];
       const searchName = res[1];
       const atLeast1Bikes = res[2];
       const atLeast1Docks = res[3];
 
-      let filteredAppStation: AppStation[] = appStations;
-      if(atLeast1Bikes) filteredAppStation = appStations.filter(appStation => appStation.num_bikes_available >= 1)
-      if(atLeast1Docks) filteredAppStation = filteredAppStation.filter(appStation => appStation.num_docks_available >= 1)
+      let filteredAppStations: AppStation[] = appStations;
+      if(atLeast1Bikes) filteredAppStations = appStations.filter(appStation => appStation.num_bikes_available >= 1)
+      if(atLeast1Docks) filteredAppStations = filteredAppStations.filter(appStation => appStation.num_docks_available >= 1)
 
       if(searchName === '') 
-        this.appStations = filteredAppStation.sort(this.utilsService.compareName);
+        filteredAppStations = filteredAppStations.sort(this.utilsService.compareName);
       else {
-        this.appStations = filteredAppStation.filter(appStation => appStation.name.toLowerCase()
+        filteredAppStations = filteredAppStations.filter(appStation => appStation.name.toLowerCase()
                                                                            .indexOf(searchName.toLowerCase()) !== -1)
                                                                            .sort(this.utilsService.compareName)
       }
+
+      this.appStations = this.utilsService.setUpFavorites(filteredAppStations);
 
     });
   }

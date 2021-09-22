@@ -40,7 +40,7 @@
             <th>In service</th>
         </tr>
         <tr *ngFor="let appStation of appStations">
-            <td (click)=goDetails(appStation.id)>{{ appStation.name }}</td>
+            <td (click)=goDetails(appStation.id) [ngClass]="{'is-favorite': appStation.isFavorite === true}">{{ appStation.name }}</td>
             <td>{{ appStation.capacity }}</td>
             <td>{{ appStation.num_bikes_available }}</td>
             <td> <div class="circle" [ngClass]="{'green': appStation.is_installed === 1, 'red' : appStation.is_installed === 0 }"></div></td>

@@ -1,1 +1,60 @@
-<p>details works!</p>
+<div class="content" *ngIf="appStation$ | async as appStation; else noContent">
+
+    <fa-icon [icon]="faArrowLeft" class="back fa-3x" (click)=goList()></fa-icon>
+
+    <h1 class="title">{{ appStation.name }}</h1>
+
+    <div class="star-text">
+        <fa-icon [icon]="faStar" [ngClass]="{'is-favorite': appStation.isFavorite === true}" class="star-icon fa-3x" (click)="markAsFavorite(appStation.id)"></fa-icon>
+        <span class="text">Mark as favorite</span>
+    </div>
+    
+
+    <div class="grid-infos">
+
+        <div class="bikes-available block">
+            <span class="value">{{ appStation.num_bikes_available }}</span>
+            <span class="text">bikes available</span>
+        </div>
+
+        <div class="bikes-disabled block">
+            <span class="value">{{ appStation.num_bikes_disabled }}</span>
+            <span class="text">bikes disabled</span>
+        </div>
+
+        <div class="dock-available block">
+            <span class="value">{{ appStation.num_docks_available }}</span>
+            <span class="text">docks available</span>
+        </div>
+
+        <div class="dock-disable block">
+            <span class="value">{{ appStation.capacity - appStation.num_docks_available }}</span>
+            <span class="text">docks disabled</span>
+        </div>
+
+    <div class="update-date block">
+            <span class="value date">{{ formatDate(appStation.last_reported) }}</span>
+            <span class="text">last update date</span>
+        </div>
+
+        <div class="in-service block">
+            <span class="value"><div class="circle" [ngClass]="{'green': appStation.is_installed === 1, 'red' : appStation.is_installed === 0 }"></div></span>
+            <span class="text">Is the station currently on the street ?</span>
+        </div>
+
+        <div class="location-available block">
+            <span class="value"><div class="circle" [ngClass]="{'green': appStation.is_renting === 1, 'red' : appStation.is_renting === 0 }"></div></span>
+            <span class="text">Is the station currently renting vehicles ?</span>
+        </div>
+
+        <div class="return-bike block">
+            <span class="value"><div class="circle" [ngClass]="{'green': appStation.is_returning === 1, 'red' : appStation.is_returning === 0 }"></div></span>
+            <span class="text">Is the station accepting vehicle returns ?</span>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #noContent>
+    <div class="no-content" >Sorry, no app station correspond to this id.</div>
+</ng-template>
