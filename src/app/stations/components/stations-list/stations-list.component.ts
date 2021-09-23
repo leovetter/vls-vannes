@@ -40,6 +40,8 @@ export class StationsListComponent implements OnInit, OnDestroy {
       )
     ]).subscribe((res: any) => {
 
+      console.log(res)
+
       const appStations: AppStation[] = [...res[0]];
       const searchName = res[1];
       const atLeast1Bikes = res[2];

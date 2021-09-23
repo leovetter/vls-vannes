@@ -20,6 +20,7 @@ export class StationsStore {
     constructor(private stationsService: StationsService) {
 
         this.updateStations();
+        setInterval(() => this.updateStations(), 60000);
     }
 
     updateStations() {
@@ -35,6 +36,8 @@ export class StationsStore {
             const stationsInformations: StationsInformation = res[0];
             const stationsStatus: StationsStatus = res[1];
 
+            const oldAppStations = this.appStationSubject.getValue();
+
             // Iterate over the two datasets from the api to build one appStations model which will be used 
             // in our app.
             const appStations: AppStation[] = [];
@@ -45,14 +48,28 @@ export class StationsStore {
 
                     stationStatus = stationsStatus.data.stations[i];
                     if (stationStatus.station_id === stationInformations.station_id) break;
+                    
+                }
+
+                let oldAppStation: AppStation | null = null;
+                if (oldAppStations !== []) {
+
+                    for(let i = 0; i < oldAppStations.length; i++) {
+
+                        const oldAppStationTemp = oldAppStations[i];
+                        if (oldAppStationTemp.id === stationInformations.station_id) oldAppStation = oldAppStationTemp;
+                    }
                 }
 
                 if (stationStatus !== null ) {
 
+                    let isFavorite = false;
+                    if (oldAppStation) isFavorite = oldAppStation.isFavorite;
+
                     const appStation: AppStation = new AppStation(stationInformations.station_id, stationInformations.name,
                     stationInformations.lat, stationInformations.lon, stationInformations.capacity, stationStatus.num_bikes_available,
                     stationStatus.num_bikes_disabled, stationStatus.num_docks_available, stationStatus.is_installed, 
-                    stationStatus.is_renting, stationStatus.is_returning, stationStatus.last_reported);
+                    stationStatus.is_renting, stationStatus.is_returning, stationStatus.last_reported, isFavorite);
 
                     appStations.push(appStation);
                 } else {

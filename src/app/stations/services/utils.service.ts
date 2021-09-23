@@ -28,7 +28,7 @@ export class UtilsService {
 
         if (appStations[i].isFavorite) {
           indexOfFavorite.push(i);
-          favorites.push(appStations[i])
+          favorites.push(appStations[i]);
         }
       }
 

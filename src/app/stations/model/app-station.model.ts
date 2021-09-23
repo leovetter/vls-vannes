@@ -15,7 +15,8 @@ export class AppStation {
 
     constructor(id: string, name: string, lat: number, lon: number, capacity: number, 
                 num_bikes_available: number, num_bikes_disabled: number, num_docks_available: number,
-                is_installed: number, is_renting: number, is_returning: number, last_reported: number) {
+                is_installed: number, is_renting: number, is_returning: number, last_reported: number,
+                isFavorite: boolean) {
 
         this.id = id;
         this. name =  name;
@@ -29,7 +30,7 @@ export class AppStation {
         this.is_renting = is_renting;
         this.is_returning = is_returning;
         this.last_reported = last_reported;
-        this.isFavorite = false;
+        this.isFavorite = isFavorite;
     }
 
     setFavorite(isFavorite: boolean) {
