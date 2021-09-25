@@ -3,6 +3,7 @@ import { BehaviorSubject, forkJoin, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IncompleteApiError } from '../errors/incomplete-api-error.error';
 import { AppStation } from '../model/app-station.model';
+import { Marker } from '../model/marker.model';
 import { StationInformation } from '../model/station-information.interface';
 import { StationStatus } from '../model/station-status.interface';
 import { StationsInformation } from '../model/stations-information.interface';
@@ -79,7 +80,7 @@ export class StationsStore {
 
         return this.appStation$.pipe(
             map(appStations => appStations.find(appStation => appStation.id === id))
-        )
+        );
     }
 
     /**

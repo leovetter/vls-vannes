@@ -8,6 +8,7 @@ import { ToggleDirective } from './directives/toggle-directive.directive';
 import { DetailsComponent } from './components/details/details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormatDatePipe } from './pipes/format-date.pipe';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormatDatePipe } from './pipes/format-date.pipe';
   imports: [
     CommonModule,
     StationsRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    GoogleMapsModule
   ]
 })
 export class StationsModule { }

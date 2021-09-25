@@ -33,7 +33,7 @@
         </div>
 
     <div class="update-date block">
-            <span class="value date">{{ formatDate(appStation.last_reported) }}</span>
+            <span class="value date">{{ appStation.last_reported | appformatDate }}</span>
             <span class="text">last update date</span>
         </div>
 
@@ -53,6 +53,12 @@
         </div>
 
     </div>
+
+    <div class="my-google-map">
+        <google-map [options]="{ center: appStation.position }">
+            <map-marker [position]="appStation.position"></map-marker>
+        </google-map>
+      </div>
 </div>
 
 <ng-template #noContent>

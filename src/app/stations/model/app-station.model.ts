@@ -1,8 +1,10 @@
 export class AppStation {
     id: string;
     name: string;
-    lat: number;
-    lon: number;
+    position: {
+        lat: number;
+        lng: number;
+    }
     capacity: number;
     num_bikes_available: number;
     num_bikes_disabled: number;
@@ -20,8 +22,10 @@ export class AppStation {
 
         this.id = id;
         this. name =  name;
-        this.lat = lat;
-        this.lon = lon;
+        this.position = {
+            lat: lat,
+            lng: lon
+        };
         this.capacity = capacity;
         this.num_bikes_available = num_bikes_available;
         this.num_bikes_disabled = num_bikes_disabled;

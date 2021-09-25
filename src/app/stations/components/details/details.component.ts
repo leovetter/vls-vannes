@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AppStation } from '../../model/app-station.model';
 import { StationsStore } from '../../store/stations.store';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import * as moment from 'moment';
+import { Marker } from '../../model/marker.model';
 
 @Component({
   selector: 'app-details',
@@ -26,30 +26,15 @@ export class DetailsComponent implements OnInit {
 
     // Get the station corresponding to the id given in parameters of the route
     this.route.params.subscribe(params => {
-      this.appStation$ = this.stationsStore.getAppStation(params.id)
-    })
-  }
-
-  /**
-   * Format the date from a timestamp to a human readable date 
-   * 
-   * @param lastReported number
-   * @returns 
-   */
-  formatDate(lastReported: number) {
-
-    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    const date = new Date(lastReported * 1000);
-    const aMoment = moment(date);
-
-    return aMoment.format('dddd, MMMM Do YYYY')
+      this.appStation$ = this.stationsStore.getAppStation(params.id);
+    });
   }
 
   /**
    * Navigate to the page stations list 
    */
   goList() {
-    this.router.navigateByUrl('stations/list')
+    this.router.navigateByUrl('stations/list');
   }
 
   /**
