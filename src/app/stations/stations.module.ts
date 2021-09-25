@@ -7,13 +7,15 @@ import { HighlightInputDirective } from './directives/highlight-input.directive'
 import { ToggleDirective } from './directives/toggle-directive.directive';
 import { DetailsComponent } from './components/details/details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormatDatePipe } from './pipes/format-date.pipe';
 
 @NgModule({
   declarations: [
     StationsListComponent,
     HighlightInputDirective,
     ToggleDirective,
-    DetailsComponent
+    DetailsComponent,
+    FormatDatePipe
   ],
   imports: [
     CommonModule,

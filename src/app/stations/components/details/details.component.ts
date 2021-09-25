@@ -24,11 +24,18 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // Get the station corresponding to the id given in parameters of the route
     this.route.params.subscribe(params => {
       this.appStation$ = this.stationsStore.getAppStation(params.id)
     })
   }
 
+  /**
+   * Format the date from a timestamp to a human readable date 
+   * 
+   * @param lastReported number
+   * @returns 
+   */
   formatDate(lastReported: number) {
 
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
@@ -38,10 +45,18 @@ export class DetailsComponent implements OnInit {
     return aMoment.format('dddd, MMMM Do YYYY')
   }
 
+  /**
+   * Navigate to the page stations list 
+   */
   goList() {
     this.router.navigateByUrl('stations/list')
   }
 
+  /**
+   * When the user decid mark station with corresponding id to favorite
+   * 
+   * @param id string
+   */
   markAsFavorite(id: string) {
     this.stationsStore.markAsFavorite(id);
   }
