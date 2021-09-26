@@ -1,50 +1,61 @@
-<div class="content">
+<div class="content-map">
 
-    <h1 class="title">Stations List</h1>
-    <h2 class="subtitle">Click on station name to access details</h2>
-    
-    <img src="assets/vls.jpg" alt="bikes" class="img-bikes">
+    <div class="content">
 
-    <div class="input-block" appHighlightInput>
-        <label for="search-name" class="search-name-label hide-label">Search by name</label>
-        <input id="search-name" type="text" class="search-name" placeholder="Search by name">
-    </div>
+        <h1 class="title">Stations List</h1>
+        <h2 class="subtitle">Click on station name to access details</h2>
+        
+        <img src="assets/vls.jpg" alt="bikes" class="img-bikes">
 
-    <div class="filter-block">
-
-        <div class="input-label">
-
-            <div class="toggle-box" appToggle>
-                <div id="bikes-toggle" class="toggle"></div>
-            </div>
-            <span class="label">At least 1 bike</span>
-
+        <div class="input-block" appHighlightInput>
+            <label for="search-name" class="search-name-label hide-label">Search by name</label>
+            <input id="search-name" type="text" class="search-name" placeholder="Search by name">
         </div>
 
-        <div class="input-label">
+        <div class="filter-block">
 
-            <div class="toggle-box" appToggle>
-                <div id="docks-toggle" class="toggle"></div>
+            <div class="input-label">
+
+                <div class="toggle-box" appToggle>
+                    <div id="bikes-toggle" class="toggle"></div>
+                </div>
+                <span class="label">At least 1 bike</span>
+
             </div>
-            <span class="label">At least 1 dock</span>
-            
+
+            <div class="input-label">
+
+                <div class="toggle-box" appToggle>
+                    <div id="docks-toggle" class="toggle"></div>
+                </div>
+                <span class="label">At least 1 dock</span>
+                
+            </div>
         </div>
+        
+
+        <table class="stations-table">
+            <tr>
+                <th>Name</th>
+                <th>Capacity</th>
+                <th>Bikes available</th>
+                <th>In service</th>
+            </tr>
+            <tr *ngFor="let appStation of appStations">
+                <td (click)=goDetails(appStation.id) [ngClass]="{'is-favorite': appStation.isFavorite === true}">{{ appStation.name }}</td>
+                <td>{{ appStation.capacity }}</td>
+                <td>{{ appStation.num_bikes_available }}</td>
+                <td> <div class="circle" [ngClass]="{'green': appStation.is_installed === 1, 'red' : appStation.is_installed === 0 }"></div></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="map">
+        <google-map [options]="mapOptions">
+            <map-marker *ngFor="let appStation of appStations" [position]="appStation.position" [label]="appStation.name"></map-marker>
+        </google-map>
     </div>
     
-
-    <table class="stations-table">
-        <tr>
-            <th>Name</th>
-            <th>Capacity</th>
-            <th>Bikes available</th>
-            <th>In service</th>
-        </tr>
-        <tr *ngFor="let appStation of appStations">
-            <td (click)=goDetails(appStation.id) [ngClass]="{'is-favorite': appStation.isFavorite === true}">{{ appStation.name }}</td>
-            <td>{{ appStation.capacity }}</td>
-            <td>{{ appStation.num_bikes_available }}</td>
-            <td> <div class="circle" [ngClass]="{'green': appStation.is_installed === 1, 'red' : appStation.is_installed === 0 }"></div></td>
-        </tr>
-
-    </table>
 </div>

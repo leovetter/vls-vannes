@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { concat } from 'rxjs';
-import { AppStation } from '../model/app-station.model';
+import { AppStation } from '../../stations/model/app-station.model';
 
 @Injectable({
   providedIn: 'root'

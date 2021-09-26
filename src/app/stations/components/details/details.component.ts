@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppStation } from '../../model/app-station.model';
-import { StationsStore } from '../../store/stations.store';
+import { StationsStore } from '../../../core/store/stations.store';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Marker } from '../../model/marker.model';
 
 @Component({
   selector: 'app-details',
@@ -23,6 +22,9 @@ export class DetailsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+
+    // Start navigation at the top of the page
+    window.scroll(0, 0);
 
     // Get the station corresponding to the id given in parameters of the route
     this.route.params.subscribe(params => {

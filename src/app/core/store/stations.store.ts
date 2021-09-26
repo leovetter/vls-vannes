@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IncompleteApiError } from '../errors/incomplete-api-error.error';
-import { AppStation } from '../model/app-station.model';
-import { Marker } from '../model/marker.model';
-import { StationInformation } from '../model/station-information.interface';
-import { StationStatus } from '../model/station-status.interface';
-import { StationsInformation } from '../model/stations-information.interface';
-import { StationsStatus } from '../model/stations-status.interface';
+import { IncompleteApiError } from '../../stations/errors/incomplete-api-error.error';
+import { AppStation } from '../../stations/model/app-station.model';
+import { StationInformation } from '../../stations/model/station-information.interface';
+import { StationStatus } from '../../stations/model/station-status.interface';
+import { StationsInformation } from '../../stations/model/stations-information.interface';
+import { StationsStatus } from '../../stations/model/stations-status.interface';
 import { StationsService } from '../services/stations.service';
 
 @Injectable({
@@ -15,8 +14,13 @@ import { StationsService } from '../services/stations.service';
 })
 export class StationsStore {
 
+    // AppStations model
     private appStationSubject = new BehaviorSubject<AppStation[]>([]);
     appStation$: Observable<AppStation[]> = this.appStationSubject.asObservable();
+
+    // Notifications model
+    private notificationSubject = new BehaviorSubject<string | null>(null);
+    notification$: Observable<string | null> = this.notificationSubject.asObservable();
 
     constructor(private stationsService: StationsService) {
 
@@ -63,7 +67,10 @@ export class StationsStore {
             });
             
             // Associate random number to mitigate the limitations of the api
-            appStations = this.assignRandomValues(appStations);
+            appStations = this.assignRandomValues(appStations,oldAppStations);
+
+            // Set notification when docks are no longer available
+            this.setDocksNotifications(appStations, oldAppStations); 
 
             // Refresh the subject with right value 
             this.appStationSubject.next(appStations);
@@ -179,18 +186,55 @@ export class StationsStore {
      * @param appStations AppStation[]
      * @returns appStations AppStation[]
      */
-    assignRandomValues(appStations: AppStation[]): AppStation[] {
+    assignRandomValues(appStations: AppStation[], oldAppStations: AppStation[]): AppStation[] {
 
-        appStations[2].num_docks_available = 0;
-        appStations[3].num_bikes_available = 5;
-        appStations[7].num_docks_available = 0;
-        appStations[8].num_bikes_available = 1;
-        appStations[9].num_docks_available = 0;
-        appStations[10].num_bikes_available = 10;
-        appStations[1].is_installed = 0;
-        appStations[4].is_installed = 0;
-        appStations[6].is_installed = 0;
+        if (oldAppStations.length === 0) {
+            console.log('in it')
+            appStations[3].num_bikes_available = 5;
+            appStations[8].num_bikes_available = 1;
+            appStations[10].num_bikes_available = 10;
+            appStations[1].is_installed = 0;
+            appStations[4].is_installed = 0;
+            appStations[6].is_installed = 0;
+        } else {
+
+            appStations[2].num_docks_available = 0;
+            appStations[3].num_bikes_available = 5;
+            appStations[7].num_docks_available = 0;
+            appStations[8].num_bikes_available = 1;
+            appStations[9].num_docks_available = 0;
+            appStations[10].num_bikes_available = 10;
+            appStations[1].is_installed = 0;
+            appStations[4].is_installed = 0;
+            appStations[6].is_installed = 0;
+        }
+        
 
         return appStations;
+    }
+
+
+    /**
+     * Compare previous and present values of appStation to set notification if needed
+     * @param appStation 
+     * @param oldAppStation 
+     */
+    setDocksNotifications(appStations: AppStation[], oldAppStations: AppStation[]) {
+        
+        appStations.forEach(appStation => {
+
+            oldAppStations.forEach(oldAppStation => {
+
+                if (oldAppStation) {
+
+                    if (appStation.id === oldAppStation.id && 
+                        appStation.num_docks_available === 0 && 
+                        oldAppStation.num_docks_available > 0) 
+                        this.notificationSubject.next(appStation.name);
+                }
+            });
+        });
+
+        this.notificationSubject.next(null);
     }
 }

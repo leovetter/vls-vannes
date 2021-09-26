@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { combineLatest, fromEvent, Observable, of, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AppStation } from '../../model/app-station.model';
-import { UtilsService } from '../../services/utils.service';
-import { StationsStore } from '../../store/stations.store';
+import { MapOptions } from '../../model/map-otpions.model';
+import { UtilsService } from '../../../core/services/utils.service';
+import { StationsStore } from '../../../core/store/stations.store';
 
 @Component({
   selector: 'app-stations-list',
@@ -15,6 +16,8 @@ export class StationsListComponent implements OnInit, OnDestroy {
 
   appStationsSubscription: Subscription;
   appStations: AppStation[] = [];
+
+  mapOptions: MapOptions;
   
   constructor(private stationsStore: StationsStore,
               private utilsService: UtilsService,
@@ -66,6 +69,9 @@ export class StationsListComponent implements OnInit, OnDestroy {
       // Sort the stations to have favorites stations first in list
       this.appStations = this.utilsService.setUpFavorites(filteredAppStations);
 
+      // Set map options
+      this.setMapOptions();
+
     });
   }
 
@@ -113,6 +119,25 @@ export class StationsListComponent implements OnInit, OnDestroy {
       }
 
       return filteredAppStations;
+  }
+
+  /**
+   * Set the map options
+   */
+  setMapOptions() {
+
+    // Compute center
+    let lat = 0;
+    let lng = 0;
+    this.appStations.forEach(appStation => {
+
+      lat += appStation.position.lat;
+      lng += appStation.position.lng;
+    });
+    lat /= this.appStations.length;
+    lng /= this.appStations.length;
+
+    this.mapOptions = { center: { lat, lng }, zoom: 12 };
   }
 
   
